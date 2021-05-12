@@ -5,17 +5,16 @@ By [@bschulke](https://github.com/bschulke) and [@aibhleog](https://github.com/a
 
 
 ## Action items // to do:
-* scrape recipe directions/steps
-  * figure out how to store this (currently planned: 1 column pandas df for steps)
-* get title
-* store serving size somehow
-  * make a dictionary `recipe` to house all of these values!
 * test on multiple BonAppetit recipes
+  * make a more intelligent xpath loc for title
+  * figure out new serving size location
+  * debug steps for loop breaking
+  * add an exception for SPECIAL EQUIPMENT inside the ingredients list
+* pretty format for output
 
 
 ### Stretch goals:
 * user input?
-* pretty format for output!
 * ADD A RECIPE SCALING OPTION (like "double this recipe" or "halve this recipe")
 
 
