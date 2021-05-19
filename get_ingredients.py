@@ -14,13 +14,13 @@ path = r"C:\Users\Bryn\geckodriver\geckodriver.exe"
 options = Options()
 options.add_argument('--headless')
 
-driver = webdriver.Firefox(executable_path = path, options=options)
+#driver = webdriver.Firefox(options=options) # when Taylor's running it
+driver = webdriver.Firefox(executable_path=path, options=options) # when Bryn's running it
 
 #driver.get("https://www.bonappetit.com/recipe/bas-best-pina-colada")
+
 #ask for url
-
 url = str(input("Please enter the URL of the recipe you want to TLDR: "))
-
 driver.get(url)
 
 #create a dictionary called "recipe"
@@ -32,9 +32,6 @@ articler = driver.find_element_by_class_name("recipe")
 #get the recipe title
 #title = articler.find_element_by_xpath('//*[@id="main-content"]/article/div[1]/header/div[1]/div[1]/h1').text
 title = articler.find_element_by_xpath('//*[@data-testid="ContentHeaderHed"]').text
-
-# print(title.text)
-
 recipe["title"] = title # assign to recipe dictionary
 
 bkgd = articler.find_element_by_class_name("content-background")
@@ -47,14 +44,13 @@ ingredients_title = bkgd.find_element_by_xpath('//*[@data-testid="IngredientList
 #get text "Makes 4 servings" to test xpath - success! :)
 servings_text = ingredients_title.find_element_by_tag_name("p").text
 #servings = servings_text.text.split(" ")[1]
+
 servings = [int(s) for s in servings_text.split() if s.isdigit()]
+recipe["servings"] = servings[0] #assign to recipe dictionary
 
 # print("serving size: ",servings[0])
-# print(servings_text)
-
-recipe["servings"] = servings[0] #assign to recipe dictionary
 #print(servings_text) # yay this worked!
-#print(servings)
+
 
 portions_html = ingredients_title.find_elements_by_tag_name("p")
 items_html = ingredients_title.find_elements_by_tag_name("div")
@@ -73,7 +69,6 @@ for x in np.arange(1,len(portions_html)):    #skipping index 0 bc serving size
         items.append(items_html[x].text)
 
 ingredientsList = pd.DataFrame({"amount": portions, "ofThing": items})
-
 recipe["ingredients"] = ingredientsList
 
 # using x result from for loop on line 64
@@ -102,7 +97,7 @@ steps, steptitles = [], []
 # we're assuming there will be more step descriptions than step step steptitles
 # so we've added an "if" statement to append an empty string if this happens
 
-for x in np.arange(0,len(stepstitle_html)):
+for x in np.arange(0,len(stepstxt_html)):
     if x == len(stepstitle_html):
         steptitles.append("")
     else:
@@ -112,10 +107,18 @@ for x in np.arange(0,len(stepstitle_html)):
     #print(stepstxt_html[x].text)
 
 directions = pd.DataFrame({"steps": steptitles, "details": steps})
-
 recipe["directions"] = directions # add to recipe dictionary
 
-print(recipe)
+#print(recipe)
+
+print() # just to add space
+# running through the keys of the dictionary to print in a pretty way
+keys = list(recipe.keys()) # get the list of keys
+for key in keys:
+	print(key)
+	print(recipe[key],end='\n\n') # adds an extra "enter" space between output
+
+
 
 #prototype test - click on Pinterest link in page
 ##uglyName = bkgd.find_element_by_class_name("social-icons__list-item social-icons__list-item--pinterest social-icons__list-item--circular")
