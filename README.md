@@ -6,10 +6,6 @@ By [@bschulke](https://github.com/bschulke) and [@aibhleog](https://github.com/a
 
 ## Action items // to do:
 * test on multiple BonAppetit recipes
-  * make a more intelligent xpath loc for title
-  * figure out new serving size location
-  * debug steps for loop breaking
-  * add an exception for SPECIAL EQUIPMENT inside the ingredients list
 * pretty format for output
 
 
