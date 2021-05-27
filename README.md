@@ -7,6 +7,8 @@ By [@bschulke](https://github.com/bschulke) and [@aibhleog](https://github.com/a
 ## Action items // to do:
 * test on multiple BonAppetit recipes
 * pretty format for output
+  * save to text file, open text file
+* scrape units from ofThing and make new column
 
 
 ### Stretch goals:
@@ -20,3 +22,6 @@ By [@bschulke](https://github.com/bschulke) and [@aibhleog](https://github.com/a
   * give option to save recipe to file
 * what if we made this into a mobile app that can be used as a plugin on a web browser?
 * test on other non-BonAppetit recipe websites!
+
+### Thoughts:
+For this script version, we need to think about how it will work out of the box for any user.
