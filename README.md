@@ -5,7 +5,7 @@ By [@bschulke](https://github.com/bschulke) and [@aibhleog](https://github.com/a
 
 
 ## Action items // to do:
-* check for operating system when first run, add key to flag if Unix or Windows
+* check for operating system when first run, add key to flag if Unix or Windows - **homework for Bryn**
 * add helpful print statements ("getting ingredients"...."getting directions")
 * need to account for subsections in the STEPS part and/or the INGREDIENTS
   * see if there are special tags for these subheader titles?
