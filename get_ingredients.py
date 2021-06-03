@@ -14,8 +14,8 @@ path = r"C:\Users\Bryn\geckodriver\geckodriver.exe"
 options = Options()
 options.add_argument('--headless')
 
-#driver = webdriver.Firefox(options=options) # when Taylor's running it
-driver = webdriver.Firefox(executable_path=path, options=options) # when Bryn's running it
+#driver = webdriver.Firefox(options=options) # when Taylor's running it (Linux)
+driver = webdriver.Firefox(executable_path=path, options=options) # when Bryn's running it (Windows)
 
 #driver.get("https://www.bonappetit.com/recipe/bas-best-pina-colada")
 
@@ -118,8 +118,6 @@ for key in keys:
 	print(key)
 	print(recipe[key],end='\n\n') # adds an extra "enter" space between output
 
-
-
 #prototype test - click on Pinterest link in page
 ##uglyName = bkgd.find_element_by_class_name("social-icons__list-item social-icons__list-item--pinterest social-icons__list-item--circular")
 ##link = uglyName.find_element_by_tag_name("a")
@@ -132,3 +130,13 @@ for key in keys:
 #time.sleep(3) #no longer need this, this was for when we opened the browser to test
 
 driver.close()
+
+#Write results to a text file in a pretty format
+
+filename = recipe["title"].replace(" ","-")
+
+myfile = open(f'recipes\{filename}.txt','w') #backslash bc Windows for Bryn
+
+print('Hello', file=myfile)
+
+myfile.close()
