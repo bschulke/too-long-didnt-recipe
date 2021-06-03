@@ -5,13 +5,17 @@ By [@bschulke](https://github.com/bschulke) and [@aibhleog](https://github.com/a
 
 
 ## Action items // to do:
-* test on multiple BonAppetit recipes
-* pretty format for output
-  * save to text file, open text file
+* check for operating system when first run, add key to flag if Unix or Windows
+* add helpful print statements ("getting ingredients"...."getting directions")
+* need to account for subsections in the STEPS part and/or the INGREDIENTS
+  * see if there are special tags for these subheader titles?
+* pretty format for output -- save to text file, open text file
 * scrape units from ofThing and make new column
+* test on multiple BonAppetit recipes
 
 
 ### Stretch goals:
+* saving file info -- first time run prompt user to specify location/path if not inside repo?
 * user input?
 * ADD A RECIPE SCALING OPTION (like "double this recipe" or "halve this recipe")
 
