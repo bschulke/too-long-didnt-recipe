@@ -14,14 +14,15 @@ path = r"C:\Users\Bryn\geckodriver\geckodriver.exe"
 options = Options()
 options.add_argument('--headless')
 
-#driver = webdriver.Firefox(options=options) # when Taylor's running it (Linux)
-driver = webdriver.Firefox(executable_path=path, options=options) # when Bryn's running it (Windows)
+driver = webdriver.Firefox(options=options) # when Taylor's running it (Linux)
+#driver = webdriver.Firefox(executable_path=path, options=options) # when Bryn's running it (Windows)
 
 #driver.get("https://www.bonappetit.com/recipe/bas-best-pina-colada")
 
 #ask for url
 url = str(input("Please enter the URL of the recipe you want to TLDR: "))
 driver.get(url)
+print('\nOpening recipe...')
 
 #create a dictionary called "recipe"
 recipe = {}
@@ -30,26 +31,19 @@ recipe = {}
 articler = driver.find_element_by_class_name("recipe")
 
 #get the recipe title
-#title = articler.find_element_by_xpath('//*[@id="main-content"]/article/div[1]/header/div[1]/div[1]/h1').text
 title = articler.find_element_by_xpath('//*[@data-testid="ContentHeaderHed"]').text
 recipe["title"] = title # assign to recipe dictionary
 
 bkgd = articler.find_element_by_class_name("content-background")
 
-#ingredients_title= bkgd.find_element_by_xpath("/html/body/div[1]/div/main/article/div[2]/div[1]/div/div[3]")
 ingredients_title = bkgd.find_element_by_xpath('//*[@data-testid="IngredientList"]')
-
-#print(ingredients_title.text)
+print('Getting ingredients...')
 
 #get text "Makes 4 servings" to test xpath - success! :)
 servings_text = ingredients_title.find_element_by_tag_name("p").text
-#servings = servings_text.text.split(" ")[1]
 
 servings = [int(s) for s in servings_text.split() if s.isdigit()]
 recipe["servings"] = servings[0] #assign to recipe dictionary
-
-# print("serving size: ",servings[0])
-#print(servings_text) # yay this worked!
 
 
 portions_html = ingredients_title.find_elements_by_tag_name("p")
@@ -61,32 +55,28 @@ portions, items = [], []
 special = False
 
 for x in np.arange(1,len(portions_html)):    #skipping index 0 bc serving size
-    if items_html[x].text.upper() == "SPECIAL EQUIPMENT":
-        special = True
-        break
-    else:
-        portions.append(portions_html[x].text)
-        items.append(items_html[x].text)
+	if items_html[x].text.upper() == "SPECIAL EQUIPMENT":
+	    special = True
+	    break
+	else:
+	    portions.append(portions_html[x].text)
+	    items.append(items_html[x].text)
 
 ingredientsList = pd.DataFrame({"amount": portions, "ofThing": items})
 recipe["ingredients"] = ingredientsList
 
 # using x result from for loop on line 64
 if special == True:
-    special_equip = []
-    for y in np.arange((x+1),len(items_html)):
-        special_equip.append(items_html[y].text)
-    special_equip = pd.DataFrame({"Addt. Tools": special_equip})
-    recipe["special equipment"] = special_equip
+	print('Adding special equipment...')
+	special_equip = []
+	for y in np.arange((x+1),len(items_html)):
+	    special_equip.append(items_html[y].text)
+	special_equip = pd.DataFrame({"Addt. Tools": special_equip})
+	recipe["special equipment"] = special_equip
 
-#print(ingredientsList)
 
 prep_title = bkgd.find_element_by_xpath('//*[@data-testid="InstructionsWrapper"]/div')
-
-#print(prep_title.text)
-
-#prep_title = bkgd.find_element_by_xpath("/html/body/div[1]/div/main/article/div[2]/div[1]/div/div[4]")
-
+print('Adding instructions...')
 
 stepstxt_html = prep_title.find_elements_by_tag_name("p")
 stepstitle_html = prep_title.find_elements_by_tag_name("h3")
@@ -98,45 +88,65 @@ steps, steptitles = [], []
 # so we've added an "if" statement to append an empty string if this happens
 
 for x in np.arange(0,len(stepstxt_html)):
-    if x == len(stepstitle_html):
-        steptitles.append("")
-    else:
-        steptitles.append(stepstitle_html[x].text)
-    steps.append(stepstxt_html[x].text)
-    #print(stepstitle_html[x].text)
-    #print(stepstxt_html[x].text)
+	if x == len(stepstitle_html):
+	    steptitles.append("")
+	else:
+	    steptitles.append(stepstitle_html[x].text+':')
+	steps.append(stepstxt_html[x].text)
 
 directions = pd.DataFrame({"steps": steptitles, "details": steps})
 recipe["directions"] = directions # add to recipe dictionary
 
-#print(recipe)
 
-print() # just to add space
+print('Printing recipe in terminal:',end='\n\n')
+
+print('------------------------------------------------------------',end='\n\n')
 # running through the keys of the dictionary to print in a pretty way
 keys = list(recipe.keys()) # get the list of keys
 for key in keys:
 	print(key)
 	print(recipe[key],end='\n\n') # adds an extra "enter" space between output
 
-#prototype test - click on Pinterest link in page
-##uglyName = bkgd.find_element_by_class_name("social-icons__list-item social-icons__list-item--pinterest social-icons__list-item--circular")
-##link = uglyName.find_element_by_tag_name("a")
-##link = bkgd.find_element_by_xpath('//a [aria-label = "Share on Pinterest"]')
-#allLinks = bkgd.find_elements_by_xpath("//*[contains(@class,'link--pinterest')]")
-#link = allLinks[2]
-#url = link.get_attribute("href")
-#driver.get(url)
+print('------------------------------------------------------------')
+driver.close() # closing selenium
 
-#time.sleep(3) #no longer need this, this was for when we opened the browser to test
-
-driver.close()
-
-#Write results to a text file in a pretty format
+# ----------------------------------------------- #
+# Write results to a text file in a pretty format #
+# ----------------------------------------------- #
 
 filename = recipe["title"].replace(" ","-")
+filename = filename.replace("'","")
 
-myfile = open(f'recipes\{filename}.txt','w') #backslash bc Windows for Bryn
+#myfile = open(f'recipes\{filename}.txt','w') # backslash bc Windows for Bryn
+myfile = open(f'recipes/{filename}.txt','w') # forward slash bc Unix for Taylor
 
-print('Hello', file=myfile)
+# Writing title & serving size to file
+print(recipe['title'], file=myfile)
+print(f"Serving size: {recipe['servings']}", file=myfile, end='\n\n')
+
+# Running through tables & writing to file
+for key in keys[2:]:
+	print(key.upper(), file=myfile)
+	table = recipe[key].copy() # getting the table out
+	columns = table.columns.values # column names
+	if len(columns) > 1:
+		for i in table.index.values: # running through row
+			print(f'{table.loc[i,columns[0]]} {table.loc[i,columns[1]]}', file=myfile)
+	else:
+		for i in table.index.values: # running through row
+			print(f'{table.loc[i,columns[0]]}', file=myfile)
+	print(file=myfile)	
+	
+	
+# adding URL at the bottom
+print(f'\nURL: {url}',file=myfile)
 
 myfile.close()
+
+print(f'\nRecipe download complete!  File saved at recipes/{filename}.txt')
+
+
+
+
+
+
