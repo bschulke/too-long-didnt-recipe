@@ -3,13 +3,19 @@ For everyone who hates the long stories people add to their recipe articles.
 
 By [@bschulke](https://github.com/bschulke) and [@aibhleog](https://github.com/aibhleog)
 
+## Previously on our show, we:
+* wrote the recipe output to a file (included URL)
+* prettified the recipe output
+* added print statements that showed script progress
+
 
 ## Action items // to do:
-* check for operating system when first run, add key to flag if Unix or Windows - **homework for Bryn**
-* add helpful print statements ("getting ingredients"...."getting directions")
-* need to account for subsections in the STEPS part and/or the INGREDIENTS
+
+* **NEXT TIME**: need to account for subsections in the STEPS part and/or the INGREDIENTS
   * see if there are special tags for these subheader titles?
-* pretty format for output -- save to text file, open text file
+* check for operating system when first run, add key to flag if Unix or Windows - **homework for Bryn**
+  * once OS is determined, switch driver
+  * also change file extensions (the "/")
 * scrape units from ofThing and make new column
 * test on multiple BonAppetit recipes
 
