@@ -6,6 +6,7 @@ from selenium.webdriver.firefox.options import Options
 import time
 import pandas as pd
 import numpy as np
+from sys import platform
 
 #initialize webdrive stuff
 
@@ -14,8 +15,11 @@ path = r"C:\Users\Bryn\geckodriver\geckodriver.exe"
 options = Options()
 options.add_argument('--headless')
 
-driver = webdriver.Firefox(options=options) # when Taylor's running it (Linux)
-#driver = webdriver.Firefox(executable_path=path, options=options) # when Bryn's running it (Windows)
+# checking if Bryn or Taylor is running this
+if platform == 'win32':
+	driver = webdriver.Firefox(executable_path=path, options=options) # when Bryn's running it (Windows)
+else:
+	driver = webdriver.Firefox(options=options) # when Taylor's running it (Linux)
 
 #driver.get("https://www.bonappetit.com/recipe/bas-best-pina-colada")
 
@@ -117,8 +121,11 @@ driver.close() # closing selenium
 filename = recipe["title"].replace(" ","-")
 filename = filename.replace("'","")
 
-#myfile = open(f'recipes\{filename}.txt','w') # backslash bc Windows for Bryn
-myfile = open(f'recipes/{filename}.txt','w') # forward slash bc Unix for Taylor
+# checking if Bryn or Taylor is running this
+if platform == 'win32': slash = '\'
+else: slash = '/'
+	
+myfile = open(f'recipes{slash}{filename}.txt','w') # forward slash bc Unix for Taylor
 
 # Writing title & serving size to file
 print(recipe['title'], file=myfile)
@@ -143,7 +150,7 @@ print(f'\nURL: {url}',file=myfile)
 
 myfile.close()
 
-print(f'\nRecipe download complete!  File saved at recipes/{filename}.txt')
+print(f'\nRecipe download complete!  File saved at recipes{slash}{filename}.txt')
 
 
 
