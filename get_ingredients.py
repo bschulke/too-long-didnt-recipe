@@ -122,9 +122,9 @@ filename = recipe["title"].replace(" ","-")
 filename = filename.replace("'","")
 
 # checking if Bryn or Taylor is running this
-if platform == 'win32': slash = '\'
+if platform == 'win32': slash = '\\'
 else: slash = '/'
-	
+
 myfile = open(f'recipes{slash}{filename}.txt','w') # forward slash bc Unix for Taylor
 
 # Writing title & serving size to file
@@ -142,18 +142,12 @@ for key in keys[2:]:
 	else:
 		for i in table.index.values: # running through row
 			print(f'{table.loc[i,columns[0]]}', file=myfile)
-	print(file=myfile)	
-	
-	
+	print(file=myfile)
+
+
 # adding URL at the bottom
 print(f'\nURL: {url}',file=myfile)
 
 myfile.close()
 
 print(f'\nRecipe download complete!  File saved at recipes{slash}{filename}.txt')
-
-
-
-
-
-

@@ -4,19 +4,18 @@ For everyone who hates the long stories people add to their recipe articles.
 By [@bschulke](https://github.com/bschulke) and [@aibhleog](https://github.com/aibhleog)
 
 ## Previously on our show, we:
-* wrote the recipe output to a file (included URL)
-* prettified the recipe output
-* added print statements that showed script progress
-
+* checked for operating system when first run, added key to flag if Unix or Windows
+  * once OS is determined, switch driver
+  * also changed file extensions (the "/")
+* made a list of units to match against parsed units from recipe ingredients
 
 ## Action items // to do:
 
 * **NEXT TIME**: need to account for subsections in the STEPS part and/or the INGREDIENTS
   * see if there are special tags for these subheader titles?
-* check for operating system when first run, add key to flag if Unix or Windows - **homework for Bryn**
-  * once OS is determined, switch driver
-  * also change file extensions (the "/")
 * scrape units from ofThing and make new column
+  * each line ofThing, separate by spaces and capture first word if matches list (put empty string if no line)
+  * check for "." at end of units and remove
 * test on multiple BonAppetit recipes
 
 
