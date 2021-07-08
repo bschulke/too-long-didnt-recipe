@@ -1,5 +1,5 @@
 #List of all food measurement units for parsing. "Unit" is header
-unit
+units
 cup
 cups
 tablespoon

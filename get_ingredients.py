@@ -30,6 +30,7 @@ print('\nOpening recipe...')
 
 #create a dictionary called "recipe"
 recipe = {}
+table_units = pd.read_csv("units.txt", skiprows=1) #create table for unit scaling
 
 #search for what we need
 articler = driver.find_element_by_class_name("recipe")
@@ -53,7 +54,7 @@ recipe["servings"] = servings[0] #assign to recipe dictionary
 portions_html = ingredients_title.find_elements_by_tag_name("p")
 items_html = ingredients_title.find_elements_by_tag_name("div")
 
-portions, items = [], []
+portions, items, measures = [], [], []
 
 # define "is there special equipment" in var special. Start with False
 special = False
@@ -63,10 +64,25 @@ for x in np.arange(1,len(portions_html)):    #skipping index 0 bc serving size
 	    special = True
 	    break
 	else:
-	    portions.append(portions_html[x].text)
-	    items.append(items_html[x].text)
+		portions.append(portions_html[x].text)
+		temp_ofThing = items_html[x].text
+		pre_words = temp_ofThing.split(" ")
+		words = pre_words[0].split(".")
+		check = table_units.isin([words[0]]).any().units
+		if check:
+			measures.append(words[0])
+			temp_ofThing = temp_ofThing[len(words[0])+1:] #at some point, ajust output formatting to account for periods
+		else:
+			measures.append("")
+		items.append(temp_ofThing)
 
-ingredientsList = pd.DataFrame({"amount": portions, "ofThing": items})
+#separate out the units
+#match them to List
+#take them out of "items_html"
+#leave in ones that don't match the list
+
+
+ingredientsList = pd.DataFrame({"amount": portions, "units": measures, "ofThing": items})
 recipe["ingredients"] = ingredientsList
 
 # using x result from for loop on line 64
