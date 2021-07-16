@@ -3,17 +3,22 @@ For everyone who hates the long stories people add to their recipe articles.
 
 By [@bschulke](https://github.com/bschulke) and [@aibhleog](https://github.com/aibhleog)
 
-## Previously on our show, we:
-* scrape units from ofThing and make new column
-  * each line ofThing, separate by spaces and capture first word if matches list (put empty string if no line)
-  * added the unit (or empty string) to new units column 
-  * cut out unit word from ofThing column
-  * (also checked for "." at end of units and removed it, too)
+## Previously on our show, we: 
+* looking into the subsections in the HTML for some recipes
+  * for the ingredients list, they're set up the same as the `<div>`s used in the ofThing part of the lists, hence why it's read into the code and throws off the order in that table
+  * for the steps list, they're an `<h3>` object one layer above the rest, so the code currently reads in only the first subsection of directions.
+* identified pieces of the gods awful class names that could be helpful building our ingredients list and steps
+  * for the portion/amounts, there is "... Amount-Wcygw ..."
+  * for the ofThing/Description, there is "... Description-dSowHq ..."
+  * for the step number, there is "... InstructionHed-czmoes ..."
+  * for the steps, there is "... InstructionBody-huriqk ..."
 
 ## Action items // to do:
 
+* figure out how to replace the `find_elements_by_tag_name` sections (that pulled the `<p>` and `<div>` info to make the table) and replace with the specific class keywords:
+  * check "previously on our show" to see what the class name fragments are
 * **NEXT TIME**: need to account for subsections in the STEPS part and/or the INGREDIENTS
-  * see if there are special tags for these subheader titles?
+  * see if there are special tags for these subheader titles?  **answer** for the subheaders in the ingredients list, there is "... SubHed-eHJCch ..."; for the subheaders in the steps section, there is '... InstructionGroupHed-hQmgGS ...'
 * test on multiple BonAppetit recipes
 
 
