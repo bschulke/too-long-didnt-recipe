@@ -8,16 +8,19 @@ import pandas as pd
 import numpy as np
 from sys import platform
 
-#initialize webdrive stuff
+print("*****Starting TLDR*****")
 
-path = r"C:\Users\Bryn\geckodriver\geckodriver.exe"
+#Control recipe (make sure we don't go too far off the rails): https://www.bonappetit.com/recipe/sweet-and-salty-mango-lassi
+
+#initialize webdrive stuff
+win_path = r"C:\Users\Bryn\geckodriver\geckodriver.exe"
 
 options = Options()
 options.add_argument('--headless')
 
 # checking if Bryn or Taylor is running this
 if platform == 'win32':
-	driver = webdriver.Firefox(executable_path=path, options=options) # when Bryn's running it (Windows)
+	driver = webdriver.Firefox(executable_path=win_path, options=options) # when Bryn's running it (Windows)
 else:
 	driver = webdriver.Firefox(options=options) # when Taylor's running it (Linux)
 
@@ -44,7 +47,7 @@ bkgd = articler.find_element_by_class_name("content-background")
 ingredients_title = bkgd.find_element_by_xpath('//*[@data-testid="IngredientList"]')
 print('Getting ingredients...')
 
-#get text "Makes 4 servings" to test xpath - success! :)
+#get serving size
 servings_text = ingredients_title.find_element_by_tag_name("p").text
 
 servings = [int(s) for s in servings_text.split() if s.isdigit()]
@@ -104,7 +107,7 @@ stepstitle_html = prep_title.find_elements_by_tag_name("h3")
 steps, steptitles = [], []
 
 # if stepstxt_html and stepstitle_html are not the same length,
-# we're assuming there will be more step descriptions than step step steptitles
+# we're assuming there will be more step descriptions than step titles
 # so we've added an "if" statement to append an empty string if this happens
 
 for x in np.arange(0,len(stepstxt_html)):
