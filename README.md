@@ -3,30 +3,22 @@ For everyone who hates the long stories people add to their recipe articles.
 
 By [@bschulke](https://github.com/bschulke) and [@aibhleog](https://github.com/aibhleog)
 
-## Previously on our show, we: 
-* looking into the subsections in the HTML for some recipes
-  * for the ingredients list, they're set up the same as the `<div>`s used in the ofThing part of the lists, hence why it's read into the code and throws off the order in that table
-  * for the steps list, they're an `<h3>` object one layer above the rest, so the code currently reads in only the first subsection of directions.
-* identified pieces of the gods awful class names that could be helpful building our ingredients list and steps
-  * for the portion/amounts, there is "... Amount-Wcygw ..."
-  * for the ofThing/Description, there is "... Description-dSowHq ..."
-  * for the step number, there is "... InstructionHed-czmoes ..."
-  * for the steps, there is "... InstructionBody-huriqk ..."
+## Previously on our show, we:
+* remembered what exactly we did a while ago :facepalm:
+* double-checked the helpful tags we discovered previously
+* talked through inital steps to search for subheaders and then print the sections
+* added notes in get_ingredients.py and made commented sections
 
 ## Action items // to do:
-
-* figure out how to replace the `find_elements_by_tag_name` sections (that pulled the `<p>` and `<div>` info to make the table) and replace with the specific class keywords:
-  * check "previously on our show" to see what the class name fragments are
-* **NEXT TIME**: need to account for subsections in the STEPS part and/or the INGREDIENTS
-  * see if there are special tags for these subheader titles?  **answer** for the subheaders in the ingredients list, there is "... SubHed-eHJCch ..."; for the subheaders in the steps section, there is '... InstructionGroupHed-hQmgGS ...'
-* test on multiple BonAppetit recipes
+* deal with empty spaces in ingredients list and instructions without numbers (like "Do Ahead")
+* add a try/except for ingredients or instruction steps where there are subsections
+* can we search for an element by part of a class name?
 
 
 ### Stretch goals:
 * saving file info -- first time run prompt user to specify location/path if not inside repo?
 * user input?
 * ADD A RECIPE SCALING OPTION (like "double this recipe" or "halve this recipe")
-
 
 ### SUPER Stretch goals:
 * make this a basic HTML website, where you input the URL of the recipe and it will output the ingredients and steps on the website.
