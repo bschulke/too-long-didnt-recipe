@@ -54,6 +54,12 @@ servings = [int(s) for s in servings_text.split() if s.isdigit()]
 recipe["servings"] = servings[0] #assign to recipe dictionary
 
 
+# -- TO BE ADDED
+# we're thinking about adding a try...except for the ingredients 
+# list to account for the recipes where there are subsections.
+# as test we can print things to see if it's finding the right stuff
+
+# INGREDIENTS
 portions_html = ingredients_title.find_elements_by_tag_name("p")
 items_html = ingredients_title.find_elements_by_tag_name("div")
 
@@ -98,6 +104,11 @@ if special == True:
 	recipe["special equipment"] = special_equip
 
 
+# -- TO BE ADDED
+# we're thinking about adding a try...except for the instructions
+# list to account for the recipes where there are subsections
+
+# INSTRUCTIONS
 prep_title = bkgd.find_element_by_xpath('//*[@data-testid="InstructionsWrapper"]/div')
 print('Adding instructions...')
 
