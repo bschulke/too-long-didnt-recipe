@@ -7,11 +7,12 @@ By [@bschulke](https://github.com/bschulke) and [@aibhleog](https://github.com/a
 * remembered what exactly we did a while ago :facepalm:
 * double-checked the helpful tags we discovered previously
 * talked through inital steps to search for subheaders and then print the sections
+* added notes in get_ingredients.py and made commented sections
 
 ## Action items // to do:
 * deal with empty spaces in ingredients list and instructions without numbers (like "Do Ahead")
 * add a try/except for ingredients or instruction steps where there are subsections
-
+* can we search for an element by part of a class name?
 
 
 ### Stretch goals:
